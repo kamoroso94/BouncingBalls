@@ -1,0 +1,119 @@
+:focus {
+	outline: none !important;
+}
+
+html,body {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+.container-fluid {
+	padding: 0px;
+}
+
+canvas {
+	display: block;
+}
+
+canvas.light {
+	background: url("img/grid0.png");
+}
+
+canvas.dark {
+	background: url("img/grid1.png");
+}
+
+#controls {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	padding: 5px;
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	background: #EEE;
+	opacity: 0.25;
+	z-index: 1;
+	transition: opacity 0.5s;
+}
+
+#controls,#controls * {
+	user-select:  none;
+	-webkit-user-select:  none;
+	-moz-user-select:  none;
+	-ms-user-select:  none;
+}
+
+#controls h2 {
+	margin: 0px;
+}
+
+#controls form {
+	display: none;
+}
+
+#controls:hover {
+	opacity: 1;
+}
+
+#controls:hover h2 {
+	margin-bottom: 10px;
+}
+
+#controls:hover form {
+	display: block;
+}
+
+#controls:hover form input {
+	vertical-align: middle;
+}
+
+/*Toggle Switch styles*/
+input[id|="toggle"] {
+	display: none;
+}
+
+input[id|="toggle"]+[data-switch-id|="toggle"] {
+	display: inline-block;
+	width: 48px;		/*2x*/
+	height: 24px;	/*1x*/
+	border-radius: 12px;	/*0.5x*/
+	box-shadow: inset 0px 0px 3px rgba(0,0,0,0.5);	/*0.125x*/
+	background: linear-gradient(to right,#8F0,#8F0 50%,#FFF 50%,#FFF);
+	background-position: -24px 0px;	/*-1x 0x*/
+	background-size: 72px 24px;		/*3x 1x*/
+	vertical-align: middle;
+	transition: 0.25s;
+}
+
+input[id|="toggle"]+[data-switch-id|="toggle"]>label {
+	display: block;
+	width: 24px;			/*1x*/
+	height: 24px;		/*1x*/
+	min-height: 24px;	/*1x*/
+	border-radius: 50%;
+	box-shadow: 0px 0px 3px rgba(0,0,0,0.5);	/*0.125x*/
+	background: #CCC;
+	cursor: pointer;
+	transition: 0.25s;
+}
+
+input[id|="toggle"]:checked+[data-switch-id|="toggle"] {
+	background-position: 0px 0px;	/*0x*/
+}
+
+input[id|="toggle"]:checked+[data-switch-id|="toggle"]>label {
+	transform: translateX(24px);	/*1x*/
+}
+
+.modal-title {
+	vertical-align: middle;
+}
+
+.modal-title:before {
+	display: inline-block;
+	padding-right: 5px;
+	content: url("icons/bballs-32.png");
+	vertical-align: middle;
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bouncing Balls</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- SEO -->
+        <meta name="application-name" content="Bouncing Balls" />
+        <meta name="author" content="Kyle Amoroso" />
+        <meta name="description" content="Click and drag to throw bouncing balls in your window screen!" />
+        <meta name="keywords" content="bouncing balls,physics,simulation,game,html5" />
+        <meta name="version" content="0.7" />
+        <meta property="og:title" content="Game Boy Selfie" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="http://pitt.edu/~ksa18/bounicngballs/" />
+        <meta property="og:image" content="http://pitt.edu/~ksa18/bouncingballs/splash.png" />
+        <meta property="og:description" content="Click and drag to throw bouncing balls in your window screen!" />
+        <!-- Favicons -->
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="icon" type="image/png" href="icons/bballs-16.png" />
+        <link rel="icon" type="image/png" href="icons/bballs-32.png" />
+        <link rel="icon" type="image/png" href="icons/bballs-64.png" />
+        <link rel="icon" type="image/png" href="icons/bballs-128.png" />
+		<!-- Libraries -->
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.4.2/randomColor.js"></script>
+		<!-- Custom -->
+        <link rel="stylesheet" href="style.css" />
+        <script src="bballs.js"></script>
+    </head>
+    <body>
+		<div class="container-fluid">
+			<div id="controls" role="toolbar">
+				<h2><span class="glyphicon glyphicon-cog"></span> Settings</h2>
+				<form class="form-inline" role="form" id="settings">
+					<div class="form-group">
+						<label for="gravity">Gravity:</label>
+						<input type="range" data-toggle="tooltip" title="10" id="gravity" min="0" max="15" value="10" step="1" />
+					</div><br /><br />
+					<div class="form-group">
+						<label for="bounce">Bounce:</label>
+						<input type="range" data-toggle="tooltip" title="0.9" id="bounce" min="0" max="1" value="0.9" step="0.1" />
+					</div><br /><br />
+					<div class="form-group">
+						<label for="angle">Angle:</label>
+						<div class="input-group">
+							<input type="number" class="form-control" id="angle" min="-360" max="360" value="-90" />
+							<div class="input-group-addon">Deg</div>
+						</div>
+					</div><br /><br />
+					<div class="form-group checkbox">
+						<strong>Contagion:</strong>
+						<input type="checkbox" id="toggle-contagion">
+						<div data-switch-id="toggle-contagion"><label for="toggle-contagion"></label></div>
+					</div><br /><br />
+					<div class="form-group checkbox">
+						<strong>Dark Theme:</strong>
+						<input type="checkbox" id="toggle-dark">
+						<div data-switch-id="toggle-dark"><label for="toggle-dark"></label></div>
+					</div><br /><br />
+					<div class="btn-group">
+						<button type="button" class="btn btn-default" id="fullscreen"><span class="glyphicon glyphicon-fullscreen"></span></button>
+						<button type="button" class="btn btn-default" id="freeze">Freeze</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#tips"><span class="glyphicon glyphicon-question-sign"></span></button>
+						<button type="reset" class="btn btn-primary">Reset</button>
+					</div>
+				</form>
+			</div>
+
+			<canvas class="light"></canvas>
+			
+			<!-- Modal -->
+			<div class="modal fade" id="tips" role="dialog">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h3 class="modal-title">Bouncing Balls v0.7</h3>
+						</div>
+						<div class="modal-body">
+							<h4>Welcome!</h4>
+							<p>Thank you for using Bouncing Balls! This is a favorite project of mine, and I hope you enjoy toying around with it as much as I have developing it!</p>
+							<h4>Helpful Hints</h4>
+							<p>Here are some useful tips to using this game.</p>
+							<ul>
+								<li>Click or tap and drag on the screen to "throw" a ball.</li>
+								<li>You can access the settings by hovering over or tapping on it in the upper-left corner of the page.</li>
+								<li>You can change the gravity, bounciness, contagion mode, theme, and fullscreen mode in the settings.</li>
+								<li>Enabling contagion mode triggers the spread of a ball's color to another of lower momentum upon collision.</li>
+							</ul>
+						</div>
+						<div class="modal-footer">
+							<form role="form" class="pull-left">
+								<div class="checkbox">
+									<label><input type="checkbox" id="hideModal"> Do not show me this message again.</label>
+								</div>
+							</form>
+							<div class="btn-group">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-success" data-dismiss="modal">Confirm</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			$('[data-dismiss="modal"].btn-success').on('click',function(){
+				localStorage.setItem('hideModal',$('#hideModal').prop('checked'));
+			});
+			if(localStorage.getItem('hideModal')==null||JSON.parse(localStorage.getItem('hideModal'))!=true){
+				$('#hideModal').prop('checked',false);
+				$('#tips').modal();
+			} else {
+				$('#hideModal').prop('checked',true);
+			}
+			$('#tips').on('hidden.bs.modal',function() {
+				$('#hideModal').prop('checked',JSON.parse(localStorage.getItem('hideModal')));
+			});
+			$('[data-toggle="tooltip"]').tooltip({animation:false}).on('input',function(){
+				$(this).prop('title',$(this).prop('value')).tooltip('fixTitle').tooltip('show');
+			});
+			$('#fullscreen').on('click',function(){
+				$(this).toggleClass('active');
+			});
+		</script>
+    </body>
+</html>
