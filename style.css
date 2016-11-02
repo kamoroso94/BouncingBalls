@@ -18,11 +18,11 @@ canvas {
 }
 
 canvas.light {
-	background: url("img/grid0.png");
+	background: url("images/grid0.png");
 }
 
 canvas.dark {
-	background: url("img/grid1.png");
+	background: url("images/grid1.png");
 }
 
 #controls {

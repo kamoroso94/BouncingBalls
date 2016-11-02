@@ -24,7 +24,6 @@
 
 /***NOTES****
 
-UNIFY JQUERY
 SEPERATE LOGIC FROM GRAPHICS!!!!
 Fix the ugliness that is this monstrosity
 
@@ -402,7 +401,7 @@ window.addEventListener("load",function() {
 					(touch.clientX-BBalls.pointer.downX)*BBalls.forceFactor,
 					(touch.clientY-BBalls.pointer.downY)*BBalls.forceFactor,
 					BBalls.Ball.MIN_RADIUS+BBalls.Ball.RADIUS_RANGE*Math.random(),
-					randomColor({luminosity:"dark"})
+					randomColor()
 				));
 			}
 		}
